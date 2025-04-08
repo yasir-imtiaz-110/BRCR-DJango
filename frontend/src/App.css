@@ -1,0 +1,115 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+body {
+
+  background-size: cover;
+  background-color: black;
+}
+
+.designation{
+  background-color: black;
+}
+
+.text-left-custom {
+  text-align: left;
+  display: block;
+}
+.text-bold-custom-7{
+  font-weight:600;
+}
+
+.form-label-custom{
+  color:#071437;
+  font-weight:600;
+  text-align: left;
+  display: block;
+  margin-left: 7px;
+  margin-top: 20px;
+  font-size: 13px;
+}
+
+.form-header-custom{
+  text-align: left;
+  margin: 10px;
+  background-color: #F9F9F9;
+  font-size: 30px;
+  border-radius: 11px;
+}
+.table-header-custom{
+  color:#071437;
+  font-weight:600;
+  text-align: center;
+  /* display: block; */
+  margin-left: 3px; 
+  margin-top: 20px; 
+  font-size: 13px;
+}
+
+.table-definition-custom{
+  color:#071437;
+  font-weight:600;
+  text-align: center;
+  /* display: block; */
+  margin-left: 3px; 
+  margin-top: 20px; 
+  font-size: 13px;
+  
+}
+
+.form-dropdown-custom{
+  color:#071437;
+  font-weight:600;
+  text-align: left;
+  display: block;
+  margin-top: 6px;
+  padding-left: 6px;
+  font-size: 13px;
+  width: 100%;
+  height: 38px;
+  border-radius: 6px;
+  border-color: #DEE2E6;
+  
+}
+
+.form-input-field-custom{
+  color: red; /* Change to desired color */
+  font-size: 16px; /* Change to desired font size */
+}

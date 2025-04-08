@@ -1,0 +1,190 @@
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+// const EditUsers = ({ match }) => {
+//     const { id } = useParams();
+//     const [loading, setLoading] = useState(true);
+//     const [user, setUser] = useState({
+//         id: '',
+//         firstname: '',
+//         lastname: '',
+//         username: '',
+//         email: '',
+//         password: '',
+//         mobile: '',
+//         id_card_number: '',
+//         joining_date: '',
+//         designation: '',
+//         user_roles: '',
+//     });
+
+//     useEffect(() => {
+//         Axios.get(`http://localhost:8000/users/${id}/`)
+//             .then(res => setUser(res.data))
+//             .catch(err => console.error(err));
+//     }, [id]);
+
+
+    const EditUsers = ({ match }) => {
+        const { id } = useParams();
+        const [user, setUser] = useState({
+            id: '',
+            firstname: '',
+            lastname: '',
+            username: '',
+            email: '',
+            password: '',
+            mobile: '',
+            id_card_number: '',
+            joining_date: '',
+            designation: '',
+            user_roles: '',
+        });
+        useEffect(() => {
+            Axios.get(`http://localhost:8000/users/${id}/`)
+                .then(res => setUser(res.data))
+                .catch(err => console.error(err));
+        }, [id]);
+       
+    
+    
+
+
+    // useEffect(() => {
+    //     Axios.get(`http://localhost:8000/users/${id}/`)
+    //         .then(res => {
+    //             setUser(res.data);
+    //             setLoading(false);
+    //         })
+    //         .catch(err => {
+    //             console.error(err);
+    //             setLoading(false);
+    //         });
+    // }, [id]);
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setUser(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        Axios.post(`http://localhost:8000/users/update/${id}/`, user)
+            .then(res => {
+                console.log(res.data);
+                // Optionally, handle successful update here
+            })
+            .catch(err => console.error(err));
+    };
+
+    return (
+        <div>
+            <h1>Edit User</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>ID:</label>
+                    <input type="text" name="id" value={user.id}  />
+                    {/* <input type="text" name="id" value={user.id} readOnly /> */}
+                </div>
+                <div>
+                    <label>First Name:</label>
+                    <input type="text" name="firstname" value={user.firstname} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Last Name:</label>
+                    <input type="text" name="lastname" value={user.lastname} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Username:</label>
+                    <input type="text" name="username" value={user.username} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Email:</label>
+                    <input type="email" name="email" value={user.email} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" name="password" value={user.password} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Mobile:</label>
+                    <input type="text" name="mobile" value={user.mobile} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>ID Number:</label>
+                    <input type="text" name="id_card_number" value={user.id_card_number} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Joining Date:</label>
+                    <input type="date" name="joining_date" value={user.joining_date} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Designation:</label>
+                    <input type="text" name="designation" value={user.designation} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>User Role:</label>
+                    <input type="text" name="user_roles" value={user.user_roles} onChange={handleChange} />
+                </div>
+                <button type="submit">Update User</button>
+            </form>
+        </div>
+    );
+};
+
+export default EditUsers;
+
+       <h1>Edit User</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>ID:</label>
+                    <input type="text" name="id" value={user.id} readOnly />
+                    {/* <input type="text" name="id" value={user.id} readOnly /> */}
+                </div>
+                <div>
+                    <label>First Name:</label>
+                    <input type="text" name="firstname" value={user.firstname} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Last Name:</label>
+                    <input type="text" name="lastname" value={user.lastname} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Username:</label>
+                    <input type="text" name="username" value={user.username} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Email:</label>
+                    <input type="email" name="email" value={user.email} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" name="password" value={user.password} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Mobile:</label>
+                    <input type="text" name="mobile" value={user.mobile} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>ID Number:</label>
+                    <input type="text" name="id_card_number" value={user.id_card_number} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Joining Date:</label>
+                    <input type="date" name="joining_date" value={user.joining_date} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>Designation:</label>
+                    <input type="text" name="designation" value={user.designation} onChange={handleChange} />
+                </div>
+                <div>
+                    <label>User Role:</label>
+                    <input type="text" name="user_roles" value={user.user_roles} onChange={handleChange} />
+                </div>
+                <button type="submit">Update User</button>
+            </form>
+
