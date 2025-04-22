@@ -15,4 +15,5 @@ urlpatterns = [
     path('<int:pk>/',views.GetUser.as_view()),
     path('update/<int:pk>/', views.UsersUpdate.as_view()),
     path('delete/<int:pk>/',views.UsersDelete.as_view()),
+    path('register/', views.RegisterView.as_view(), name='register'),
 ]

@@ -33,6 +33,7 @@ if settings.DEBUG:
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'authentication.users'
 
 # Application definition
 
@@ -62,6 +63,12 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'corsheaders.middleware.CorsMiddleware'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
 

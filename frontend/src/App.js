@@ -10,6 +10,8 @@ import VehiclesList from './components/VehiclesList';
 import EditVehicle from './components/EditVehicle';
 import AddCustomer from './components/AddCustomer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import CustomersList from './components/CustomersList';
+import CustomersUpdate from './components/CustomersUpdate';
 
 function App() {
   return (
@@ -26,6 +28,9 @@ function App() {
           <Route path="/vehicles/list" element={< VehiclesList />}/>
           <Route path="/vehicles/update/:id" element={< EditVehicle />} />
           <Route path="/customers/add" element={< AddCustomer />}/>
+          <Route path="/customers/list" element={< CustomersList />}/>
+          <Route path="/customers/update/:id" element={< CustomersUpdate />} />
+
         </Routes>
       </BrowserRouter>
     </div>

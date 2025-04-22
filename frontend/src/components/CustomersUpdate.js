@@ -1,89 +1,103 @@
-// import { Axios } from 'axios';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import React, { useState } from 'react';
-import { Col, Container, Row, Form, Button } from "react-bootstrap";
-// import BASE_URL from config.js
-import config from '../confg';
-// import Tabs from './subcomponents/Tabs.js';
+import { useParams } from 'react-router-dom';
+import { Row, Col, Form, Button, Container } from 'react-bootstrap'; 
+
+// const EditUsers = ({ match }) => {
+//     const { id } = useParams();
+//     const [loading, setLoading] = useState(true);
+//     const [user, setUser] = useState({
+//         id: '',
+//         firstname: '',
+//         lastname: '',
+//         username: '',
+//         email: '',
+//         password: '',
+//         mobile: '',
+//         id_card_number: '',
+//         joining_date: '',
+//         designation: '',
+//         user_roles: '',
+//     });
+
+//     useEffect(() => {
+//         Axios.get(`http://localhost:8000/users/${id}/`)
+//             .then(res => setUser(res.data))
+//             .catch(err => console.error(err));
+//     }, [id]);
 
 
-const AddCustomer=()=>{
-    const [activeTab, setActiveTab] = useState('Tab1');
-    const [formData, setFormData] = useState({
+    const CustomersUpdate = ({ match }) => {
+        const { id } = useParams();
+        const [activeTab, setActiveTab] = useState('Tab1');  
+        const [customer, setCustomer] = useState({
+            customer_type: 'B2C',
+            visa_type: '',
+            id_card_no: '',
+            license_no: '',
+            first_name: '',
+            phone: '',
+            id_issued_by: '',
+            license_issued_by: '',
+            last_name: '',
+            relation_type: '',
+            id_expiry_date: '',
+            license_expiry_date: '',
+            gender: '',
+            reference: '',
+            companyname: '',
+            ownername: '',
+            tradeLicence: '',
+            trafficCode: '',
+            description: '',
+        });
 
-        customer_type: 'B2C',
-        visa_type: '',
-        id_card_no: '',
-        license_no: '',
-        first_name: '',
-        phone: '',
-        id_issued_by: '',
-        license_issued_by: '',
-        last_name: '',
-        relation_type: '',
-        id_expiry_date: '',
-        license_expiry_date: '',
-        gender: '',
-        reference: '',
-        companyname: '',
-        ownername: '',
-        tradeLicence: '',
-        trafficCode: '',
-        description: '',
-    });
-
-    const handleChange = (e) =>{
-        // alert(e.type);
-        const {name, value} = e.target;
-        setFormData(prevState=>({
-            ...prevState,
-            [name] : value
-        }));
-    };
+        useEffect(() => {
+            Axios.get(`http://localhost:8000/customers/${id}/`)
+                .then(res => setCustomer(res.data))
+                .catch(err => console.error(err))
+                debugger
+                ;
+        }, [id]);
     
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-        alert(e.target.value);
-        // const myData = new FormData();
+    
+    
 
-        // myData.append('ownershipStatus', formData.ownershipStatus);
-        // myData.append('cardNo', formData.cardNo);
-        // myData.append('licenseNo', formData.licenseNo);
-        // myData.append('firstName', formData.firstName);
-        // myData.append('mobile', formData.mobile);
-        // myData.append('IDPassportIssuedBy', formData.IDPassportIssuedBy);
-        // myData.append('drivingLicenseIssuedBy', formData.drivingLicenseIssuedBy);
-        // myData.append('secondName', formData.secondName);
-        // myData.append('B2CRelation', formData.B2CRelation);
-        // myData.append('idPassportExpiry', formData.idPassportExpiry);
-        // myData.append('liceseExpiry', formData.liceseExpiry);
-        // myData.append('gender', formData.gender);
-        // myData.append('relationName', formData.relationName);
-        // myData.append('firstName', formData.firstName);
-        // myData.append('secondName', formData.secondName);
-        // myData.append('licenseNo', formData.licenseNo);
-        // myData.append('cardNo', formData.cardNo);
-        // myData.append('referenceName', formData.referenceName);
 
-        // https://axios-http.com/docs/example
-        alert(JSON.stringify(formData));
-        Axios.post(config.BASE_URL + '/customers/add/', formData,{
-            headers: {
-                'Content-Type': 'application/json',
-              }
-        })
-        .then(function(res){
-            console.log(res);
-            alert("Customer Added, Successfully!");
-        })
-        .catch(function(err){
-            console.log(err);
-        })
-        .finally(() => {})
+    // useEffect(() => {
+    //     Axios.get(`http://localhost:8000/users/${id}/`)
+    //         .then(res => {
+    //             setUser(res.data);
+    //             setLoading(false);
+    //         })
+    //         .catch(err => {
+    //             console.error(err);
+    //             setLoading(false);
+    //         });
+    // }, [id]);
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setCustomer(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+        alert( `${name} Value is ${value}` );
     };
-    return(
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        Axios.post(`http://localhost:8000/customers/update/${id}/`, customer)
+            .then(res => {
+                console.log(res.data);
+                // Optionally, handle successful update here
+                alert("User Updated Sucessfully")
+            })
+            .catch(err => console.error(err));
+    };
+
+    return (
         <>
-            
     {/* Tab code  */}
             <div className="tabs">
                 <button onClick={() => setActiveTab('Tab1')}>B2C</button>
@@ -97,7 +111,7 @@ const AddCustomer=()=>{
                             <Container className='mt-5 bg-Secondary form-header-custom'> 
                                 <Row>
                                     <Col md={12}>
-                                        <h1 className="form-header-custom">Add Customer B2C</h1>
+                                        <h1 className="form-header-custom">Update Customer B2C</h1>
                                     </Col>
                                 </Row>
                             </Container>
@@ -125,8 +139,7 @@ const AddCustomer=()=>{
 
                                             <Form.Group>
                                                 <Form.Label className="form-label-custom">Visa Type</Form.Label>
-                                                    <select className="form-dropdown-custom" name="visa_type" onChange={handleChange} tabIndex="1">
-                                                        <option value="" disabled selected>-- Select Visa Type --</option>
+                                                    <select className="form-dropdown-custom" value={customer.visa_type||""} name="visa_type" onChange={handleChange} tabIndex="1">
                                                         <option value="Resident">Resident With Emirates ID</option>
                                                         <option value="GCC">GCC National</option>
                                                         <option value="Tourist">Tourist</option>
@@ -135,20 +148,20 @@ const AddCustomer=()=>{
 
                                             <Form.Group style={{ marginTop: 25}}>
                                                     <Form.Label className="form-label-custom">ID/Passport</Form.Label>
-                                                    <Form.Control type='text' placeholder='id no/passport no' className='form-input-field-custom' name="id_card_no"  onChange={handleChange} autoComplete="on" tabIndex="2"/>
+                                                    <Form.Control type='text' placeholder='id no/passport no' className='form-input-field-custom' value={customer.id_card_no} name="id_card_no"  onChange={handleChange} autoComplete="on" tabIndex="2"/>
                                             </Form.Group>
 
                                             <Form.Group >
                                                     <Form.Label className="form-label-custom">Driving License</Form.Label>
-                                                    <Form.Control type='text' placeholder='license no' name="license_no"  onChange={handleChange} autoComplete="on"  tabIndex="5"/>
+                                                    <Form.Control type='text' placeholder='license no' value={customer.license_no} name="license_no"  onChange={handleChange} autoComplete="on"  tabIndex="5"/>
                                             </Form.Group>
                                             <Form.Group >
                                                 <Form.Label className="form-label-custom"> First Name </Form.Label>
-                                                <Form.Control type='text' placeholder='first name' className='form-input-field-custom' name='first_name'  onChange={handleChange}  tabIndex="8"/>
+                                                <Form.Control type='text' placeholder='first name' className='form-input-field-custom' value={customer.first_name} name='first_name'  onChange={handleChange}  tabIndex="8"/>
                                             </Form.Group>
                                             <Form.Group>
                                                 <Form.Label className='form-label-custom'>Mob</Form.Label>
-                                                <Form.Control type='text' placeholder='' className='form-input-field-custom' name='phone' onChange={handleChange}  tabIndex="11"/>                                
+                                                <Form.Control type='text' placeholder='' className='form-input-field-custom' value={customer.phone} name='phone' onChange={handleChange}  tabIndex="11"/>                                
                                             </Form.Group>
                                     {/* </Form> */}
                                 </Col>
@@ -156,8 +169,7 @@ const AddCustomer=()=>{
                                     {/* <Form onSubmit={handleSubmit} encType="multipart/form-data"> */}
                                             <Form.Group style={{marginTop:110}}>
                                                 <Form.Label className="form-label-custom">ID/Passport Issued By</Form.Label>
-                                                    <select className="form-dropdown-custom" name="id_issued_by" onChange={handleChange}  tabIndex="3">
-                                                        <option value="" disabled selected>-- Select Country --</option>
+                                                    <select className="form-dropdown-custom" value={customer.id_issued_by} name="id_issued_by" onChange={handleChange}  tabIndex="3">
                                                         <option value="Afghanistan">Afghanistan</option>
                                                         <option value="Åland Islands">Åland Islands</option>
                                                         <option value="Albania">Albania</option>
@@ -407,8 +419,7 @@ const AddCustomer=()=>{
 
                                             <Form.Group>
                                                 <Form.Label className="form-label-custom">License Issued By</Form.Label>
-                                                    <select className="form-dropdown-custom" name="license_issued_by" onChange={handleChange} tabIndex="6">
-                                                        <option value="" disabled selected>-- Select Country --</option>
+                                                    <select className="form-dropdown-custom" value={customer.license_issued_by} name="license_issued_by" onChange={handleChange} tabIndex="6">
                                                         <option value="Afghanistan">Afghanistan</option>
                                                         <option value="Åland Islands">Åland Islands</option>
                                                         <option value="Albania">Albania</option>
@@ -658,14 +669,13 @@ const AddCustomer=()=>{
                                             
                                             <Form.Group >
                                                 <Form.Label className="form-label-custom"> Last Name </Form.Label>
-                                                <Form.Control type='text' placeholder='last name' className='form-input-field-custom' name='last_name' onChange={handleChange}   tabIndex="9"/>
+                                                <Form.Control type='text' placeholder='last name' className='form-input-field-custom' value={customer.last_name} name='last_name' onChange={handleChange}   tabIndex="9"/>
                                             </Form.Group>
 
 
                                             <Form.Group>
                                                 <Form.Label className="form-label-custom">Customer Relation</Form.Label>
-                                                    <select className="form-dropdown-custom" name="relation_type" onChange={handleChange}  tabIndex="12">
-                                                        <option value="" disabled selected>-- Select Option --</option>
+                                                    <select className="form-dropdown-custom" value={customer.relation_type} name="relation_type" onChange={handleChange}  tabIndex="12">
                                                         <option value="B2C-Direct">B2C-Direct Customer</option>
                                                         <option value="B2C-CommissionAgent">B2C-Commission Agent</option>
                                                         <option value="B2C-Indirect">B2C- Rent A Car</option>
@@ -678,12 +688,12 @@ const AddCustomer=()=>{
                                     {/* <Form onSubmit={handleSubmit} encType="multipart/form-data"> */}
                                         <Form.Group style={{ marginTop: 110}}>
                                             <Form.Label className='form-label-custom'>ID/Passport Expiry</Form.Label>
-                                            <Form.Control type='date' placeholder='' className='form-input-field-custom' name='id_expiry_date' pattern="\d{4}-\d{2}-\d{2}" onChange={handleChange}  tabIndex="4"/>                                
+                                            <Form.Control type='date' placeholder='' className='form-input-field-custom' value={customer.id_expiry_date} name='id_expiry_date' pattern="\d{4}-\d{2}-\d{2}" onChange={handleChange}  tabIndex="4"/>                                
                                         </Form.Group>
 
                                         <Form.Group >
                                                 <Form.Label className="form-label-custom">Driving License Expiry</Form.Label>
-                                                <Form.Control type='date' placeholder='Vehicle Name' className='form-input-field-custom' name="license_expiry_date"  onChange={handleChange} autoComplete="on" tabIndex="7"/>
+                                                <Form.Control type='date' placeholder='Vehicle Name' className='form-input-field-custom' value={customer.license_expiry_date} name="license_expiry_date"  onChange={handleChange} autoComplete="on" tabIndex="7"/>
                                         </Form.Group>
                                         {/* <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
                                             
@@ -706,8 +716,7 @@ const AddCustomer=()=>{
 
                                             <Form.Group>
                                                 <Form.Label className="form-label-custom">Gender</Form.Label>
-                                                    <select className="form-dropdown-custom" name="gender" onChange={handleChange}  tabIndex="10">
-                                                        <option value="" disabled selected>-- Select Gender --</option>
+                                                    <select className="form-dropdown-custom" value={customer.gender} name="gender" onChange={handleChange}  tabIndex="10">
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
                                                         <option value="notknown">Not Known</option>
@@ -716,7 +725,7 @@ const AddCustomer=()=>{
                                             
                                             <Form.Group >
                                                     <Form.Label className="form-label-custom">Direct/Agent name/Rent a Car name</Form.Label>
-                                                    <Form.Control type='text' placeholder='direct/agent name/rent a car name' className='form-input-field-custom' name="reference"  onChange={handleChange} autoComplete="on" tabIndex="13"/>
+                                                    <Form.Control type='text' placeholder='direct/agent name/rent a car name' className='form-input-field-custom' value={customer.reference} name="reference"  onChange={handleChange} autoComplete="on" tabIndex="13"/>
                                             </Form.Group>
                                             
                                     {/* </Form> */}
@@ -733,7 +742,7 @@ const AddCustomer=()=>{
                             <Container className='mt-5 bg-Secondary form-header-custom'> 
                                 <Row>
                                     <Col md={12}>
-                                        <h1 className="form-header-custom">Add Customer B2B</h1>
+                                        <h1 className="form-header-custom">Update Customer B2B</h1>
                                     </Col>
                                 </Row>
                             </Container>
@@ -743,11 +752,11 @@ const AddCustomer=()=>{
                                         {/* <Form onSubmit={handleSubmit} encType="multipart/form-data"> */}
                                             <Form.Group>
                                                     <Form.Label className="form-label-custom">Company name</Form.Label>
-                                                    <Form.Control type='text' placeholder='company name' className='form-input-field-custom' name="companyname" onChange={handleChange} autoComplete="on" tabIndex="14"/>
+                                                    <Form.Control type='text' placeholder='company name' className='form-input-field-custom' value={customer.companyname} name="companyname" onChange={handleChange} autoComplete="on" tabIndex="14"/>
                                             </Form.Group>
                                             <Form.Group>
                                                     <Form.Label className="form-label-custom">Owner name</Form.Label>
-                                                    <Form.Control type='text' placeholder='owner name' className='form-input-field-custom' name="ownername" onChange={handleChange} autoComplete="on" tabIndex="17"/>
+                                                    <Form.Control type='text' placeholder='owner name' className='form-input-field-custom' value={customer.ownername} name="ownername" onChange={handleChange} autoComplete="on" tabIndex="17"/>
                                             </Form.Group>
 
                                         {/* </Form> */}
@@ -756,7 +765,7 @@ const AddCustomer=()=>{
                                         {/* <Form onSubmit={handleSubmit} encType="multipart/form-data"> */}
                                             <Form.Group >
                                                 <Form.Label className="form-label-custom"> Company TRN </Form.Label>
-                                                <Form.Control type='text' placeholder='tax return # (optional)' className='form-input-field-custom' name='tradeLicence' onChange={handleChange}  tabIndex="15"/>
+                                                <Form.Control type='text' placeholder='tax return # (optional)' className='form-input-field-custom' value={customer.tradeLicence} name='tradeLicence' onChange={handleChange}  tabIndex="15"/>
                                             </Form.Group>
                                         {/* </Form> */}
                                     </Col>
@@ -764,11 +773,11 @@ const AddCustomer=()=>{
                                         {/* <Form onSubmit={handleSubmit} encType="multipart/form-data"> */}
                                             <Form.Group>
                                                 <Form.Label className='form-label-custom'>Traffic Code No (optional)</Form.Label>
-                                                <Form.Control type='text' placeholder='traffic code #' className='form-input-field-custom' name='trafficCode' onChange={handleChange} pattern="\d{4}-\d{2}-\d{2}" tabIndex="16"/>                                
+                                                <Form.Control type='text' placeholder='traffic code #' className='form-input-field-custom' value={customer.trafficCode} name='trafficCode' onChange={handleChange} pattern="\d{4}-\d{2}-\d{2}" tabIndex="16"/>                                
                                             </Form.Group>
                                             <Form.Group >
                                                 <Form.Label className="form-label-custom">Describtion</Form.Label>
-                                                <Form.Control type='text' placeholder='add describtion' className='form-input-field-custom' name="description" onChange={handleChange} autoComplete="on" tabIndex="18"/>
+                                                <Form.Control type='text' placeholder='add describtion' className='form-input-field-custom' value={customer.description} name="description" onChange={handleChange} autoComplete="on" tabIndex="18"/>
                                             </Form.Group>
                                     </Col>
                                 </Row>
@@ -779,20 +788,19 @@ const AddCustomer=()=>{
  
 
 
-{/* Add Form Button code */}
+                {/* Add Form Button code */}
                 <Container>
                     <Row className='mb-5 mt-3'>
                         <Col md={12} className='d-flex justify-content-end'>
                             {/* <Form> */}
-                                <Button type="submit" className='form-submit-btn-custom' size="lg" onClick={handleSubmit} tabIndex="19">Add</Button>
+                                <Button type="submit" className='form-submit-btn-custom' size="lg" onClick={handleSubmit} tabIndex="19">Update</Button>
                             {/* </Form> */}
                         </Col>
                     </Row>
                 </Container>
             </Form>
         </>
-    ); 
-
+    );
 };
 
-export default AddCustomer;
+export default CustomersUpdate;

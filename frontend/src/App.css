@@ -113,3 +113,34 @@ body {
   color: red; /* Change to desired color */
   font-size: 16px; /* Change to desired font size */
 }
+
+.tabs {
+  margin-bottom: 10px;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.tabs button:hover {
+  color: #f51414;
+}
+
+.tabs button.active {
+  border-bottom: 3px solid #007bff;
+  color: #007bff;
+  font-weight: 600;
+}
